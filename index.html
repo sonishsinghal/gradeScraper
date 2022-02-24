@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Grade</title>
+</head>
+
+<body>
+    <label>Username:</label>
+    <input type="text" id="username" name="username" />
+    <br />
+    <label>Password:</label>
+    <input type="password" id="password" name="password" />
+    <br />
+    <button id="btn">Submit</button>
+    <div id="data"></div>
+</body>
+<script>
+    const element = document.getElementById("btn");
+    element.addEventListener("click", myFunction);
+
+    function myFunction() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        req = {
+            rollnumber: username,
+            password: password,
+        };
+        fetch("/scrape", {
+            method: "POST",
+            body: JSON.stringify(req),
+        })
+            .then((result) => result.text())
+            .then((result) => {
+                console.log("Result" + result);
+                document.getElementById("data").innerHTML = result;
+            });
+        console.log(username, password);
+    }
+</script>
+
+</html>
